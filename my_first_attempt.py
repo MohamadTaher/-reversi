@@ -10,22 +10,16 @@ s.pensize(1)
 s.color('black')
 s.speed(0)
 
-colum = 0
-rows = 0
-
-
 def circle(f):
     for i in range(18):
         s.forward(f)
         s.left(20)
 
 
-
 def square (x,y):
     s.up()
     s.goto(x,y)
     s.down()
-    
     for m in range(4):
         s.forward(65)
         s.right(90)
@@ -54,16 +48,24 @@ def blueplayer (x,y):
     s.setheading(0)
     s.end_fill()
 
-    
-def drawingsquares(x):
-    for y in range (8):
-        square(x, 260-(y*65))
-
-for i in range(8):
+rows = []
+column = []
+def drawboard():
+    def drawingsquares(x):
+        for y in range (8):
+            square(x, 260-(y*65)) 
+            
+    for i in range(8):
         drawingsquares(-260 + (i*65))
-        
+        rows.append([-260 + (i*65)])
+        column.append([260-(i*65)])
 
-redplayer(-65,65)
+    print(rows)
+    print(column)
+
+   
+drawboard()
+redplayer(rows[4], column[4])
 blueplayer(-65,0)
 blueplayer(0,65)
 redplayer(0,0)
