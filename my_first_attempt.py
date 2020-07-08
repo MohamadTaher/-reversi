@@ -1,4 +1,5 @@
 
+
 import random
 import turtle
 wn = turtle.Screen()
@@ -24,16 +25,14 @@ def square (x,y):
         s.forward(65)
         s.right(90)
 
-existedRedPlayersX = []
-existedRedPlayersY = []
 
+existedRedPlayers = set()
 def redplayer (x,y):
     s.up()
     s.color('black', 'red')
     s.begin_fill()
 
-    existedRedPlayersX.append(x)
-    existedRedPlayersY.append(y)        
+    existedRedPlayers.update([(x , y)])
 
     s.goto(x+16, y-9)
     s.setheading(-135)
@@ -43,16 +42,14 @@ def redplayer (x,y):
     s.setheading(0)
     s.end_fill()
 
-existedBluePlayersX = []
-existedBluePlayersY = []
- 
+
+existedBluePlayers = []
 def blueplayer (x,y):
     s.up()
     s.color('black', 'blue')
     s.begin_fill()
 
-    existedBluePlayersX.append(x)
-    existedBluePlayersY.append(y) 
+    existedBluePlayers.append([x, y])
     
     s.goto(x+16, y-9)
     s.setheading(-135)
@@ -92,13 +89,6 @@ def drawboard():
 
 
 
-        print("hi")
-        possibleMoveCircle(existedBluePlayersX[1] -65, column[1])
-    if c< len (existedBluePlayersX):
-        break
-
-
-
    
 
 #drawboard()
@@ -106,17 +96,9 @@ redplayer(rows[3], column[3])
 blueplayer(rows[4], column[3])
 redplayer(rows[4], column[4])
 blueplayer(rows[3], column[4])
+print(existedRedPlayers[1])
+print(existedBluePlayers)
 
-
-
-while (set(existedBluePlayersX) & set(existedRedPlayersX)):
-    c = 0
-    for i in range(len (existedBluePlayersX)):
-        c+=1
-        print("hi")
-        possibleMoveCircle(existedBluePlayersX[1] -65, column[1])
-    if c< len (existedBluePlayersX):
-        break
 
 
 
