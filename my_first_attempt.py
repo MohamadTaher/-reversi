@@ -1,7 +1,6 @@
 
 
 
-
 import random
 import turtle
 wn = turtle.Screen()
@@ -16,14 +15,13 @@ s.speed(0)
 #creating lists and booleans
 existedRedPlayers = []
 existedBluePlayers = []
-
 rows = []
 column = []
 
 
 
 
-
+#drawing shapes
 def circle(f):
     for i in range(18):
         s.forward(f)
@@ -79,15 +77,7 @@ def blueplayer (x,y):
 
 
 
-
-
-
-
-
-
-
-
-
+#defin the steps  
 for i in range(8):
     rows.append(-260 + (i*65))
     column.append(260-(i*65))
@@ -98,15 +88,6 @@ def drawboard():
             square(x, 260-(y *65))   
     for i in range(8):
         drawingbox(-260 + (i*65))
-
-#drawboard()
-redplayer(rows[3], column[3])
-blueplayer(rows[4], column[3])
-redplayer(rows[4], column[4])
-blueplayer(rows[3], column[4])
-print(existedRedPlayers)
-print(existedBluePlayers)
-
 
 isEmpty = False
 def emptyBoxe(x, y):
@@ -121,13 +102,41 @@ def emptyBoxe(x, y):
     if isEmpty == True:
         possibleMoveCircle(x, y)
 
+
+
+
+
+
+#calling the fanction to do the works
+redplayer(rows[3], column[3])
+blueplayer(rows[4], column[3])
+redplayer(rows[4], column[4])
+blueplayer(rows[3], column[4])
+print(existedRedPlayers)
+print(existedBluePlayers)
     
 #here it work perfectly
 emptyBoxe(65,110)
 
 
 #but whene i try this one, it does not work
-emptyBoxe( existedRedPlayers[0,1]+65 ,110)
+emptyBoxe( existedRedPlayers[0, 0])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
