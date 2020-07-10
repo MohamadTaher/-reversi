@@ -1,6 +1,4 @@
 
-
-
 import random
 import turtle
 wn = turtle.Screen()
@@ -17,7 +15,7 @@ existedRedPlayers = []
 existedBluePlayers = []
 rows = []
 column = []
-
+xred = []
 
 
 
@@ -89,56 +87,118 @@ def drawboard():
     for i in range(8):
         drawingbox(-260 + (i*65))
 
-isEmpty = False
-def emptyBoxe(x, y):
 
-    for items in existedRedPlayers:
-        if items == [x , y]:
-            print("it worked")
-        else:
-            isEmpty = True
 
+#1) isemtpy == True >>> then draw (isempty == no red or blue stones)
+#2) if isempty == False >>>  check the box beside red and blue stones if isempty  
+isEmpty = True
+def emptyBoxes(xPlayer):
+
+    rightEmpty = False
+    leftEmpty = False
+    upEmpty = False
+    downEmpty = False
+
+    xs = []
+    ys = []
+
+    print(type(xs), type(ys))
+    
+    for items in xPlayer:
+        xs.append(items[0])
+        ys.append(items[1])            
+            
+    print('xs are',xs)
+
+
+
+        #elif item in xs:
+            #rightEmpty = True
+            #print('1') 
         
-    if isEmpty == True:
-        possibleMoveCircle(x, y)
+        
+    for item in xs:
 
 
 
+        while item +65  in xs:
+            rightEmpty = False
+            print(rightEmpty)
+            break
+        while item +65 not in xs:
+            rightEmpty = True
+            print(rightEmpty)
+            break        
+
+
+        while item -65  in xs:
+            leftEmpty = False
+            print(rightEmpty)
+            break
+        while item -65 not in xs:
+            leftEmpty = True
+            print(rightEmpty)
+            break        
+
+
+
+        if rightEmpty == True:
+             possibleMoveCircle(items[0] + 65, items[1])
+            
+        if leftEmpty == True:
+            possibleMoveCircle(items[0] - 65, items[1])
+            
+        if upEmpty == True:
+            possibleMoveCircle(items[0], items[1] + 65)
+            
+        if downEmpty == True:
+            possibleMoveCircle(items[0], items[1] - 65)
+            
 
 
 
 #calling the fanction to do the works
+#redplayer(rows[3], column[3])
+#blueplayer(rows[4], column[3])
+#redplayer(rows[4], column[4])
+#blueplayer(rows[3], column[4])
 redplayer(rows[3], column[3])
-blueplayer(rows[4], column[3])
-redplayer(rows[4], column[4])
-blueplayer(rows[3], column[4])
-print(existedRedPlayers)
-print(existedBluePlayers)
+redplayer(rows[4], column[3])
+
+print('existed red player:', existedRedPlayers)
+
+
+
+redTurn = True
+blueTurn = False
+
+if redTurn == True:
+    emptyBoxes(existedRedPlayers)
+    blueTurn = True
+    redTurn = False
+
     
-#here it work perfectly
-emptyBoxe(65,110)
-
-
-#but whene i try this one, it does not work
-emptyBoxe( existedRedPlayers[0, 0])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 
 
