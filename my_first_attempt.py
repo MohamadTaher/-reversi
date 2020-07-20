@@ -1,3 +1,8 @@
+
+
+
+
+
 import random
 import turtle
 wn = turtle.Screen()
@@ -91,6 +96,8 @@ def drawboard():
 #1) isemtpy == True >>> then draw (isempty == no red or blue stones)
 #2) if isempty == False >>>  check the box beside red and blue stones if isempty  
 isEmpty = True
+
+
 def emptyBoxes(xPlayer):
     rightEmpty = False
     leftEmpty = False
@@ -105,61 +112,32 @@ def emptyBoxes(xPlayer):
     print('xs are',xs,'     ys are',ys)
 
         
-    for item in xs:
-        checkRight = item +65
-        checkLeft = item -65
+    for xitem in xs:
+        checkRight = xitem +65
+        checkLeft = xitem -65
         
-        if checkRight in xs:
-            rightEmpty = False
-            print(rightEmpty, 'right')
-            
+
         if checkRight not in xs:
             rightEmpty = True
             print(rightEmpty, 'right')
                     
-        if checkLeft in xs:
-            leftEmpty = False
-            print(rightEmpty, 'left')
-            
         if checkLeft not in xs:
             leftEmpty = True
             print(rightEmpty, 'left')
             
         
         if rightEmpty == True:
-             possibleMoveCircle(item + 65, items[1])  
+            possibleMoveCircle(xitem + 65, xPlayer[0][1])
+            print(items[0])
+            rightEmpty = False
+             
         if leftEmpty == True:
-            possibleMoveCircle(item - 65, items[1])
+            possibleMoveCircle(xitem - 65, xPlayer[0][1])
+            print(items[0])
+            leftEmpty = False
 
-    for item in ys:
-        checkUp = item +65
-        checkDown = item -65
-        
-        if checkUp in ys:
-            upEmpty = False
-            print(rightEmpty, 'up')
-            
-        if checkUp not in ys:
-            upEmpty = True
-            print(rightEmpty, 'up')
-            
-        
-        if checkDown in ys:
-            downEmpty = False
-            print(rightEmpty, 'down')
-            
-        if checkLeft not in ys:
-            downEmpty = True
-            print(rightEmpty, 'down')
-              
-        
-        if upEmpty == True:
-            possibleMoveCircle(items[0], item + 65)
-            
-        if downEmpty == True:
-            possibleMoveCircle(items[0], item - 65)
-            
 
+            
 
 
 #calling the fanction to do the works
@@ -187,8 +165,6 @@ if redTurn == True:
 
 
 
-    
-    
     
     
     
