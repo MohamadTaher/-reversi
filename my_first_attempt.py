@@ -2,7 +2,6 @@
 
 
 
-
 import random
 import turtle
 wn = turtle.Screen()
@@ -77,89 +76,81 @@ def blueplayer (x,y):
 
 
 
-
-
 #defin the steps  
 for i in range(8):
     rows.append(-260 + (i*65))
     column.append(260-(i*65))
 
 def drawboard():
-    def drawingbox(x):
+    def drawingboxs(x):
         for y in range (8):
             square(x, 260-(y *65))   
     for i in range(8):
-        drawingbox(-260 + (i*65))
+        drawingboxs(-260 + (i*65))
 
 
 
-#1) isemtpy == True >>> then draw (isempty == no red or blue stones)
-#2) if isempty == False >>>  check the box beside red and blue stones if isempty  
-isEmpty = True
 
 
-def emptyBoxes(xPlayer):
-    rightEmpty = False
-    leftEmpty = False
-    upEmpty = False
-    downEmpty = False
+
+def emptyBoxes(mainPlayer):
+    rightEmpty, leftEmpty, upEmpty, downEmpty = False, False, False, False
     xs = []
     ys = []
 
-    for items in xPlayer:
+    if mainPlayer == existedRedPlayers:
+        mainPlayer = existedRedPlayers
+    else:
+        mainPlayer = existedBluePlayers
+
+    for items in mainPlayer:
         xs.append(items[0])
         ys.append(items[1])                    
-    print('xs are',xs,'     ys are',ys)
 
-        
-    for xitem in xs:
+    xys = list(zip (xs,ys))
+
+
+    for i, xitem in enumerate(xs):
         checkRight = xitem +65
         checkLeft = xitem -65
-        
 
-        if checkRight not in xs:
-            rightEmpty = True
-            print(rightEmpty, 'right')
-                    
-        if checkLeft not in xs:
-            leftEmpty = True
-            print(rightEmpty, 'left')
+
+        if mainPlayer[i][1] in ys:
+            if checkRight not in xs:
+                rightEmpty = True
+                print('ys are', ys)
+                print('mainPlayer[i][1] is', mainPlayer[i][1])
+
             
+        if checkLeft not in xs:
+            if mainPlayer[i][1] in ys:
+                leftEmpty = True
+            else:
+                print('left is yes')
         
         if rightEmpty == True:
-            possibleMoveCircle(xitem + 65, xPlayer[0][1])
-            print(items[0])
+            possibleMoveCircle(xitem + 65, xys[i][1])
             rightEmpty = False
-             
         if leftEmpty == True:
-            possibleMoveCircle(xitem - 65, xPlayer[0][1])
-            print(items[0])
+            possibleMoveCircle(xitem - 65, xys[i][1])
             leftEmpty = False
 
 
             
 
 
-#calling the fanction to do the works
-            
-redplayer(rows[3], column[3])
+#calling the fanction to do the works          
+
 #blueplayer(rows[4], column[3])
 redplayer(rows[4], column[4])
-#blueplayer(rows[3], column[4])
-#redplayer(rows[3], column[3])
-#redplayer(rows[4], column[3])
+#blueplayer(rows[5], column[4])
+redplayer(rows[3], column[3])
 
 print('existed red player:', existedRedPlayers)
 
 
 
-redTurn = True
-blueTurn = False
-
-if redTurn == True:
-    emptyBoxes(existedRedPlayers)
-    blueTurn = True
-    redTurn = False
+emptyBoxes(existedRedPlayers)
 
 
 
