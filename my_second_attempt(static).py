@@ -20,17 +20,9 @@ board = np.array([[6,6,6,6,6,6,6,6,6,6], #0
                   [6,6,6,6,6,6,6,6,6,6]])#9
 
 
-empty = board == 0
-red = board == 1
-blue = board == 2
-outside = board == 6
-
 redpos = board[red]
 print(redpos)
 
-isEmpty = 0
-isRed = 1
-isBlue = 2
 
 rightEmpty, leftEmpty, upEmpty, downEmpty = False, False, False, False
 
@@ -57,13 +49,14 @@ def checkDown(col,row):
 
 
 def validMove(y,x):
-    if checkRight(y,x) == isEmpty:
+    if checkRight(y,x) == 0:
         rightEmpty = True
-        print('checkRight is empty')
+
 
 for v in range(8):
     for h in range(8):
         validMove(v, h)
         
         
+    
     
