@@ -51,12 +51,19 @@ def checkDown(col,row):
 def validMove(y,x):
     if checkRight(y,x) == 0:
         rightEmpty = True
+    if checkLeft(y,x) == 0:
+        leftEmpty = True
+    if checkUp(y,x) == 0:
+        upEmpty = True 
+    if checkDown(y,x) == 0:
+        downEmpty = True
 
 
 for v in range(8):
     for h in range(8):
         validMove(v, h)
-        
+
+    
         
     
     
