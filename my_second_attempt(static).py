@@ -4,39 +4,46 @@ board = np.array([[6,6,6,6,6,6,6,6,6,6], #0
                   [6,0,0,0,0,0,0,0,0,6], #1
                   [6,0,0,0,0,0,0,0,0,6], #2
                   [6,0,0,0,0,0,0,0,0,6], #3
-                  [6,0,0,0,1,0,0,0,0,6], #4
-                  [6,2,0,1,0,2,0,0,0,6], #5
+                  [6,0,0,0,0,0,0,0,0,6], #4
+                  [6,0,0,0,0,0,0,0,0,6], #5
                   [6,0,0,0,0,0,0,0,0,6], #6
-                  [6,0,0,0,0,0,0,0,0,6], #7
+                  [6,0,0,0,0,0,1,2,0,6], #7
                   [6,0,0,0,0,0,0,0,0,6], #8
                   [6,6,6,6,6,6,6,6,6,6]])#9
 
-def validMove(row,col):
-    def checkRight(row,col):
-        cRight = row + 1
-        checkRight = board[row][cRight]
-        return checkRight
-    def checkLeft(row,col):
-        cLeft = row - 1
-        checkLeft = board[row][cLeft]
-        return checkLeft
-    def checkUp(row,col):
-        cUp = col + 1
-        checkUp = board[row][cUp]
-        return checkUp
-    def checkDown(row,col):
-        cDown = col - 1
-        checkDown = board[row][cDown]
-        return checkDown
-
-
+redTurn, blueTurn = True, False
 existedRed, existedBlue = [], []
+
 for indexs, items in np.ndenumerate(board):
     if items == 1:
         existedRed.append(indexs)
     if items == 2:
         existedBlue.append(indexs)
 
+existedStones = existedRed + existedBlue
+
+
+def checkRight(row,col):
+    cRight = col + 1
+    checkRight = board[row][cRight]
+    return checkRight
+def checkLeft(row,col):
+    cLeft = col - 1
+    checkleft = board[row][cLeft]
+    return checkleft
+def checkUp(row,col):
+    cUp = row + 1
+    checkUp = board[cUp][col]
+    return checkUp
+def checkDown(row,col):
+    cDown = row - 1
+    checkDown = board[cDown][col]
+    return checkDown
+
+
+
+if checkLeft(7,7) == 2 or 1:
+    print('hi')
    
 def checkRedHor(row):
     if np.any(board[row, :] == 1):
@@ -61,32 +68,33 @@ def checkBlueVer(col):
         return False
 
 
-print('red stones:', existedRed, "\n", 'blue stones:', existedBlue, '\n')
-for i in range(len(existedRed)):
-    h = existedRed[i][0]
-    if np.any(checkBlueHor(h) != False):
-        if np.any(existedRed[i][1] > checkBlueHor(h)):
-            print(checkBlueHor(h), 'is the blue stone location at the row', h, '\n the blue is also on the left of', existedRed[i][1])
-        if np.any(existedRed[i][1] < checkBlueHor(h)):#on the right
-            print(checkBlueHor(h), 'is the blue stone location at the row', h, '\n the blue is also on the right of', existedRed[i][1])    
-        
-    else:
-        print('there is no blue pleyer at row', h, '\n')    
+print('red stones:', existedRed, "\n", 'blue stones:', existedBlue, '\n', existedStones)
+while redTurn:
+    for i in range(len(existedRed)):
+        rowOfRed = existedRed[i][0]
+        colOfRed = existedRed[i][1]
+        if checkLeft(rowOfRed,colOfRed) == 2:
+            print('on the left')
+            break
+        else:
+            print('not on the left')
+            break
+    
+
+    
+    
     
 
 
 
-redTurn = True
-blueTurn = False
-
-if redTurn == True:
-    blueTurn = True
-    redTurn = False
-else:
-    blueTurn = True
-    redTurn = False
 
 
+#if redTurn == True:
+#    blueTurn = True
+#    redTurn = False
+#else:
+#    blueTurn = True
+#    redTurn = False
 
 
 
