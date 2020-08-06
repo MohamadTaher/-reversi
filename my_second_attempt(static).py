@@ -1,12 +1,16 @@
 import numpy as np
 import turtle
-import time
-import math
-wn = turtle.Screen()
-wn.bgcolor("grey")
-wn.setup(550,550)
+from tkinter import *
 
-s = turtle.Turtle()
+
+window = Tk()
+screen = Canvas(master = window, width = 520, height = 520, highlightthickness=0)
+screen.pack()
+
+turtle_screen = turtle.TurtleScreen(screen)
+turtle_screen.bgcolor("grey")
+
+s = turtle.RawTurtle(turtle_screen)
 s.pensize(1)
 s.color('black')
 s.speed(0)
@@ -69,16 +73,15 @@ def blueplayer (y, x):
 board = np.array([[6,6,6,6,6,6,6,6,6,6], #0
                   [6,0,0,0,0,0,0,0,0,6], #1
                   [6,0,0,0,0,0,0,0,0,6], #2
-                  [6,0,0,0,0,0,0,0,0,6], #3
+                  [6,0,0,-1,-1,1,0,0,0,6], #3
                   [6,0,0,0,0,0,0,0,0,6], #4
-                  [6,0,-1,0,0,1,0,0,0,6], #5
+                  [6,0,0,0,0,0,0,0,0,6], #5
                   [6,0,0,0,0,0,0,0,0,6], #6
-                  [6,0,0,0,0,0,-1,1,0,6], #7
+                  [6,0,0,0,0,0,0,0,0,6], #7
                   [6,0,0,0,0,0,0,0,0,6], #8
                   [6,6,6,6,6,6,6,6,6,6]])#9
 
 redTurn, blueTurn = True, False
-
 rows, columns = [], []
 for i in range(10):
     rows.append(325-(i*65))
@@ -90,9 +93,63 @@ for indexs, items in np.ndenumerate(board):
         existedRed.append(indexs)
     if items == -1:
         existedBlue.append(indexs)
-    if items == 5:
-        existedGreen.append(indexs)
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    
+def updateRed():
+    existedRed.clear()
+    for indexs, items in np.ndenumerate(board):
+        if items == 1:
+            existedRed.append(indexs)
 
+    for i in range(len(existedRed)):
+        row = existedRed[i][0]
+        col = existedRed[i][1]
+        redplayer(rows[row], columns[col])
+        
+def updateBlue():
+    existedBlue.clear()
+    for indexs, items in np.ndenumerate(board):
+        if items == -1:
+            existedBlue.append(indexs)
+
+    for i in range(len(existedBlue)):
+        row = existedBlue[i][0]
+        col = existedBlue[i][1]
+        redplayer(rows[row], columns[col])
+
+def updateGreen():
+    existedGreen.clear()        
+    for indexs, items in np.ndenumerate(board):
+        if items == 5:
+            existedGreen.append(indexs)
+    
+    for i in range(len(existedGreen)):
+        grow = existedGreen[i][0]
+        gcol = existedGreen[i][1]
+        possibleMoveCircle(rows[grow], columns[gcol])
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        
+        
 def checkRight(row,col):
     cRight = col + 1
     checkRight = board[row][cRight]
@@ -113,42 +170,74 @@ def checkDown(row,col):
 
 print('red stones:', existedRed, 'blue stones:', existedBlue)
 while redTurn:
+       
     for i in range(len(existedRed)):
         row = existedRed[i][0]
         col = existedRed[i][1]
-        left_moves = False
+        redplayer(rows[row], columns[col])
         bluefound = False
+        left_moved = False
         left_moves = 0
         for k in range(8): 
             if checkLeft(row, col - k) == -1:
-                ltimes = ltimes +1
                 bluefound = True
-                print(row, col, bluefound)
+                left_moves = left_moves +1
             if bluefound ==True:
                 if checkLeft(row, col - k ) == 0:
                     board[row, col - k - 1] = 5
-                    # possibleMoveCircle(rows[row], columns[col - k - 1])
-                    left_moves = True
+                    left_moved = True
                     bluefound = False
-                    print(bluefound)
-                    break                
+                if left_moved == True:
+                    def dodo():
+                        for g in range(left_moves):
+                            g = g + 1
+                            board[row, col  - g] = 1
+                            print(board, g)
+                    break
+
             if checkLeft(row, col - k ) == 0:
                 break
             if checkLeft(row,col - k ) == 1:
                 break
+
            
-        # if left_moves == True:
-        #     for g in range(left_moves):
-        #         board[rowOfRed,colOfRed - g-1] = 1
-        #         print('left_moves is true')
-        #         break
-        # redplayer(rows[row], columns[col])
-                 
-    print(board)
+    for i in range(len(existedBlue)):
+        brow = existedBlue[i][0]
+        bcol = existedBlue[i][1]
+        blueplayer(rows[brow], columns[bcol])
+     
+        
+    updateGreen()
+   
+    
+    def clickHandle(event):
+        mouse_y = event.y
+        mouse_x = event.x
+        yr = 0
+        xc = 0
+        for i in range(10):
+            if mouse_y > i*65 and mouse_y < (i*65) + 65:
+                yr = i + 1
+            if mouse_x > i*65 and mouse_x < (i*65) + 65:
+                xc = i + 1
+        xy = []
+        xy.append([yr,xc])
+        for i in range(len(existedGreen)):
+            if xy[0] == list(existedGreen[i]):
+                dodo()
+                updateRed()
+                print('hi')
+                
+                
+        print(existedGreen, xy)
+    
     
     break
 
-#wn.mainloop()
+
+
+screen.bind("<Button-1>", clickHandle)
+print(board)
 
 
 
@@ -156,3 +245,9 @@ while redTurn:
 
 
 
+
+
+
+
+
+window.mainloop()
