@@ -2,20 +2,24 @@ import numpy as np
 import turtle
 from tkinter import *
 
+#______________________________________creating trutle and tkninter_________________________#
 
+#creating Tk window and screen
 window = Tk()
 screen = Canvas(master = window, width = 520, height = 520, highlightthickness=0)
 screen.pack()
 
+#controlling the background color
 turtle_screen = turtle.TurtleScreen(screen)
 turtle_screen.bgcolor("grey")
 
+#bending turtle and TTk by RawTurtle + custimizing turtle propirties
 s = turtle.RawTurtle(turtle_screen)
 s.pensize(1)
 s.color('black')
 s.speed(0)
 
-#drawing shapes
+#drawing shapes methods
 def circle(f):
     for i in range(18):
         s.forward(f)
@@ -69,6 +73,9 @@ def blueplayer (y, x):
 
 
 
+#_____________________________setting app data holders and updating data_____________________#
+
+#main data array
 #                  0 1 2 3 4 5 6 7 8 9
 board = np.array([[6,6,6,6,6,6,6,6,6,6], #0
                   [6,0,0,0,0,0,0,0,0,6], #1
@@ -81,22 +88,27 @@ board = np.array([[6,6,6,6,6,6,6,6,6,6], #0
                   [6,0,0,0,0,0,0,0,0,6], #8
                   [6,6,6,6,6,6,6,6,6,6]])#9
 
-redTurn, blueTurn = True, False
-rows, columns, existedRed, existedBlue, existedGreen = [], [], [], [], []
+# declaring varlables
+rows, columns, existedRed, existedBlue, existedGreen, redTurn, blueTurn = [], [], [], [], [], True, False
+
+# appending data to rows and columns
 for i in range(10):
     rows.append(325-(i*65))
     columns.append(-325 + (i*65))
 
-
-
-        
-
+#updataing data
 def updateRed():
+    
+    '''
+    I know that is the not best way to uptade data but i will just hard code it for now until my code start working
+    '''
+    #first of all i clear the previous data then update the data when calling the function
     existedRed.clear()
     for indexs, items in np.ndenumerate(board):
         if items == 1:
             existedRed.append(indexs)
 
+    #drawing the stones after updating
     for i in range(len(existedRed)):
         row = existedRed[i][0]
         col = existedRed[i][1]
@@ -127,7 +139,7 @@ def updateGreen():
 
     
         
-        
+#checking derctions
 def checkRight(row,col):
     cRight = col + 1
     checkRight = board[row][cRight]
@@ -147,11 +159,14 @@ def checkDown(row,col):
    
 
 
+#___________________________________the main working envoirment in the game______________________________#
 while redTurn:
-    
+
+    #drawing the red and blue stones
     updateRed()
     updateBlue()
-       
+    
+    #checking the valid moves
     for i in range(len(existedRed)):
         row = existedRed[i][0]
         col = existedRed[i][1]
