@@ -82,18 +82,13 @@ board = np.array([[6,6,6,6,6,6,6,6,6,6], #0
                   [6,6,6,6,6,6,6,6,6,6]])#9
 
 redTurn, blueTurn = True, False
-rows, columns = [], []
+rows, columns, existedRed, existedBlue, existedGreen = [], [], [], [], []
 for i in range(10):
     rows.append(325-(i*65))
     columns.append(-325 + (i*65))
 
-existedRed, existedBlue, existedGreen = [], [], []
-for indexs, items in np.ndenumerate(board):
-    if items == 1:
-        existedRed.append(indexs)
-    if items == -1:
-        existedBlue.append(indexs)
-        
+
+
         
 
 def updateRed():
@@ -180,12 +175,9 @@ while redTurn:
                 break
             
         def dodo():
-            # global left_moves
             for g in range(left_moves):
                 g = g + 1
                 board[row, col  - g] = 1
-
-            # left_moves = 0
             print(board, 'leftare', left_moves)
             
     break
