@@ -160,58 +160,89 @@ def checkDown(row,col):
 
 
 #___________________________________the main working envoirment in the game______________________________#
-while redTurn:
 
-    #drawing the red and blue stones
-    updateRed()
-    updateBlue()
+#drawing the red and blue stones
+updateRed()
+updateBlue()
+
+#checking the valid moves for every red stone when it is red player turn
+for i in range(len(existedRed)):
+    row = existedRed[i][0]
+    col = existedRed[i][1]
     
-    #checking the valid moves
-    for i in range(len(existedRed)):
-        row = existedRed[i][0]
-        col = existedRed[i][1]
-        bluefound = False
-        left_moves = 0
-        for k in range(8): 
-            if checkLeft(row, col - k) == -1:
-                bluefound = True
-                left_moves = left_moves +1
-            if bluefound ==True:
-                if checkLeft(row, col - k ) == 0:
-                    board[row, col - k - 1] = 5
-                    updateGreen()
-                    bluefound = False
-
-
-
+    #set bluefound as False for defulte and left moves for 0
+    bluefound = False
+    left_moves = 0
+    
+    #checking left for possible move until the answear is yes or no.
+    for k in range(8):
+        
+        #checking left if is blue then bluefound is true
+        if checkLeft(row, col - k) == -1:
+            bluefound = True
+            left_moves = left_moves +1
+            
+        #if  bluefounmd is true then see if the box beside the blue stone is empty
+        if bluefound ==True:
             if checkLeft(row, col - k ) == 0:
+                
+                #if yes and it is true then chnge the empty '0' to '5' which represent possibleMoveCircle or green stone
+                board[row, col - k - 1] = 5
+                
+                #after changing '0' to '5' it is time to update the board and draw the green circles after the update.
+                updateGreen()
+                
+                #break the loop becuase i accomplished my goal from this loop
                 break
-            if checkLeft(row,col - k ) == 1:
-                break
+
+        #check the left if it is empty but bluefound is false (when empty is beside red stone) then end the loop
+        if checkLeft(row, col - k ) == 0:
+            break
+        
+        #check the left if is red then end the loop
+        if checkLeft(row,col - k ) == 1:
+            break
+    
+    #flip the stones if this method was called
+    def dodo():
+        #right her we are calling the left_moves varluable to see how many times the blue was found beside the red
+        #or in other words how many stones we need to flip
+        for g in range(left_moves):
+            g = g + 1
+            board[row, col  - g] = 1
             
-        def dodo():
-            for g in range(left_moves):
-                g = g + 1
-                board[row, col  - g] = 1
-            print(board, 'leftare', left_moves)
             
-    break
-
-
-
+            
+#do this method when mous is clicked.
 def clickHandle(event):
+    
+    #creating this two varubles to store where where the mouse was clicked
     yr, xc = 0, 0
+    
+    #here i store the the y and x as rows(ry) and columns(xc)
     for i in range(10):
         if event.y > i*65 and event.y < (i*65) + 65:
             yr = i + 1
         if event.x > i*65 and event.x < (i*65) + 65:
             xc = i + 1
+    
+    #store xc and yr in the same list to be ab le to compare it to the green circles postions
     xy = [[yr,xc]]
+    
+    #do the checkiong as long as there is green stones 
     for i in range(len(existedGreen)):
+        
+        #if the mouse was clicked one the of any of the green stones then do the flipping
+        '''but the problem is that it always flipping the first row and nothing else'''
         if xy[0] == list(existedGreen[i]):
             dodo()
+            
+            #draw the red stones after the board is updated
             updateRed()
 
 
+#bend the click handle with the left mouse button.
 screen.bind("<Button-1>", clickHandle)
+
+#stay the screen on until i close it
 window.mainloop()
